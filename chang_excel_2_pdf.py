@@ -1,4 +1,6 @@
 import win32com.client
+import os
+from pathlib import Path, PureWindowsPath
 import tkinter as tk
 from tkinter import filedialog
 from pywintypes import com_error
@@ -10,11 +12,19 @@ print(file_path)
 
 # Path to original excel file
 # WB_PATH = r'C:\try_python\vvv.xlsm'
-WB_PATH = file_path
+WB_PATH = r'%s' % file_path
+print(file_path)
+ext = '.'+ os.path.realpath(file_path).split('.')[-1:][0]
+filefinal = file_path.replace(ext,'')
+filefinal = file_path + '.pdf'
+
+newfilefinal = PureWindowsPath(filefinal)
+
+PATH_TO_PDF = r'%s' % newfilefinal
 
 # PDF path when saving
-# PATH_TO_PDF = r'C:\try_python\vvv.pdf'
-PATH_TO_PDF = r'C:\try_python\vvvvvv.pdf'
+#PATH_TO_PDF = r'C:\try_python\vvv.pdf'
+print(PATH_TO_PDF)
 
 excel = win32com.client.Dispatch("Excel.Application")
 

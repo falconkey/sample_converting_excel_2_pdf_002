@@ -7,45 +7,54 @@ from pywintypes import com_error
 
 root = tk.Tk()
 root.withdraw()
-file_path = filedialog.askopenfilename()
-print(file_path)
+file_path = filedialog.askopenfilenames()
+for single_fullname in file_path:
+    print(single_fullname)
+
+    count_total=len(single_fullname)
+    real_total=count_total
+    print(count_total)
+    count_total = count_total - 1
+
+    while count_total > 0:
+        if single_fullname[count_total] == "/":
+            break
+        count_total -= count_total
+
+
+    print(single_fullname[count_total])
+
 
 # Path to original excel file
 # WB_PATH = r'C:\try_python\vvv.xlsm'
-WB_PATH = r'%s' % file_path
-print(file_path)
-ext = '.'+ os.path.realpath(file_path).split('.')[-1:][0]
-filefinal = file_path.replace(ext,'')
-filefinal = file_path + '.pdf'
+    WB_PATH = r'%s' % single_fullname
+#print(file_path)
+    ext = '.'+ os.path.realpath(single_fullname).split('.')[-1:][0]
+    filefinal = single_fullname.replace(ext,'')
+    print(filefinal)
+    filefinal = single_fullname + '.pdf'
+    newfilefinal = PureWindowsPath(filefinal)
+    PATH_TO_PDF = r'%s' % newfilefinal
 
-newfilefinal = PureWindowsPath(filefinal)
+    excel = win32com.client.Dispatch("Excel.Application")
+    excel.Visible = False
 
-PATH_TO_PDF = r'%s' % newfilefinal
-
-# PDF path when saving
-#PATH_TO_PDF = r'C:\try_python\vvv.pdf'
-print(PATH_TO_PDF)
-
-excel = win32com.client.Dispatch("Excel.Application")
-
-excel.Visible = False
-
-try:
-    print('Start conversion to PDF')
+    try:
+        print('Conversing to PDF...')
 
     # Open
-    wb = excel.Workbooks.Open(WB_PATH)
+        wb = excel.Workbooks.Open(WB_PATH)
 
     # Specify the sheet you want to save by index. 1 is the first (leftmost) sheet.
-    ws_index_list = [1]
-    wb.WorkSheets(ws_index_list).Select()
+        ws_index_list = [1]
+        wb.WorkSheets(ws_index_list).Select()
 
     # Save
-    wb.ActiveSheet.ExportAsFixedFormat(0, PATH_TO_PDF)
-except com_error as e:
-    print('failed.')
-else:
-    print('Succeeded.')
-finally:
-    wb.Close()
-    excel.Quit()
+        wb.ActiveSheet.ExportAsFixedFormat(0, PATH_TO_PDF)
+    except com_error as e:
+        print('Conversion Failed.')
+    else:
+        print('Conversion Succeeded.')
+    finally:
+        wb.Close()
+        excel.Quit()

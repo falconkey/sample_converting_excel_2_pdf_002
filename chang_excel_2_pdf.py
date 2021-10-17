@@ -53,9 +53,9 @@ for single_full_filename in file_path:
     # Save
         wb.ActiveSheet.ExportAsFixedFormat(0, PATH_TO_PDF)
     except com_error as e:
-        print('Conversion Failed.')
+        print('Conversion Failed!!')
     else:
-        print('Conversion Succeeded.')
+        print('Conversion Succeeded :)')
     finally:
         wb.Close()
         excel.Quit()

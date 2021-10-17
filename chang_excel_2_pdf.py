@@ -9,10 +9,8 @@ root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilenames()
 for single_full_filename in file_path:
-    print(single_full_filename)
 
     no_of_ch_single_full_filename = len(single_full_filename)
-    print(no_of_ch_single_full_filename)
     counter_1 = no_of_ch_single_full_filename
 
     while True:
@@ -22,27 +20,17 @@ for single_full_filename in file_path:
             counter_1 -= 1
 
     loc_for_first_char = counter_1 + 5 #counting from last "/" to real name
-    #loc_for_last_char = loc_for_first_char + 9
-    print(single_full_filename)
     single_full_ture_filename = single_full_filename[loc_for_first_char:]
     single_full_ture_filename = single_full_ture_filename[:9]
     single_full_ture_filename = single_full_ture_filename.lower()
 
-#    print(single_full_ture_filename)
-
-
     single_full_ture_filename_path = single_full_filename[:loc_for_first_char-5]
 
- #   print(single_full_ture_filename_path)
-
     single_full_ture_filename_with_path = single_full_ture_filename_path + single_full_ture_filename
-
-    print(single_full_ture_filename_with_path)
 
 # Path to original excel file
 # WB_PATH = r'C:\try_python\vvv.xlsm'
     WB_PATH = r'%s' % single_full_filename
-#print(file_path)
 #    ext = '.'+ os.path.realpath(single_full_filename).split('.')[-1:][0]
 #    filefinal = single_full_filename.replace(ext,'')
     filefinal = single_full_ture_filename_with_path + '.pdf'
